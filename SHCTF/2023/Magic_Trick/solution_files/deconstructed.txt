@@ -1,0 +1,315 @@
+  1           0 LOAD_CONST               0 (0)
+              2 LOAD_CONST               1 (('AES',))
+              4 IMPORT_NAME              0 (Cryptodome.Cipher)
+              6 IMPORT_FROM              1 (AES)
+              8 STORE_NAME               1 (AES)
+             10 POP_TOP
+
+  2          12 LOAD_CONST               0 (0)
+             14 LOAD_CONST               2 (('pad',))
+             16 IMPORT_NAME              2 (Cryptodome.Util.Padding)
+             18 IMPORT_FROM              3 (pad)
+             20 STORE_NAME               3 (pad)
+             22 POP_TOP
+
+  3          24 LOAD_CONST               0 (0)
+             26 LOAD_CONST               3 (None)
+             28 IMPORT_NAME              4 (struct)
+             30 STORE_NAME               4 (struct)
+
+  4          32 LOAD_CONST               0 (0)
+             34 LOAD_CONST               4 (('crc32',))
+             36 IMPORT_NAME              5 (binascii)
+             38 IMPORT_FROM              6 (crc32)
+             40 STORE_NAME               6 (crc32)
+             42 POP_TOP
+
+  6          44 LOAD_CONST               5 (b'\x89PNG\r\n\x1a\n')
+             46 STORE_NAME               7 (PNG_SIGNATURE)
+
+  7          48 LOAD_CONST               6 (b'aaaa')
+             50 STORE_NAME               8 (PNG_CHUNK_TYPE)
+
+  8          52 LOAD_CONST               7 (16)
+             54 STORE_NAME               9 (BLOCK_SIZE)
+
+  9          56 LOAD_CONST               8 (b'%PDF-1.4\n%\xd3\xeb\xe9\xe1\n1')
+             58 STORE_NAME              10 (PDF_PREFIX_)
+
+ 11          60 LOAD_CONST               9 ('return')
+             62 LOAD_NAME               11 (bytes)
+             64 BUILD_TUPLE              2
+             66 LOAD_CONST              10 (<code object derive_key at 0x7f9ef68fb310, file "magic.py", line 11>)
+             68 LOAD_CONST              11 ('derive_key')
+             70 MAKE_FUNCTION            4 (annotations)
+             72 STORE_NAME              12 (derive_key)
+
+ 16          74 LOAD_CONST              12 ('file_path')
+             76 LOAD_NAME               13 (str)
+             78 LOAD_CONST               9 ('return')
+             80 LOAD_NAME               11 (bytes)
+             82 BUILD_TUPLE              4
+             84 LOAD_CONST              13 (<code object read_file_content at 0x7f9ef68fb520, file "magic.py", line 16>)
+             86 LOAD_CONST              14 ('read_file_content')
+             88 MAKE_FUNCTION            4 (annotations)
+             90 STORE_NAME              14 (read_file_content)
+
+ 21          92 LOAD_CONST              15 ('pdf_path')
+             94 LOAD_NAME               13 (str)
+             96 LOAD_CONST              16 ('png_path')
+             98 LOAD_NAME               13 (str)
+            100 BUILD_TUPLE              4
+            102 LOAD_CONST              17 (<code object embed_and_extract at 0x7f9ef68fb680, file "magic.py", line 21>)
+            104 LOAD_CONST              18 ('embed_and_extract')
+            106 MAKE_FUNCTION            4 (annotations)
+            108 STORE_NAME              15 (embed_and_extract)
+
+ 45         110 LOAD_NAME               15 (embed_and_extract)
+            112 LOAD_CONST              19 ('source.pdf')
+            114 LOAD_CONST              20 ('target.png')
+            116 CALL_FUNCTION            2
+            118 POP_TOP
+            120 LOAD_CONST               3 (None)
+            122 RETURN_VALUE
+
+Disassembly of <code object derive_key at 0x7f9ef68fb310, file "magic.py", line 11>:
+ 13           0 LOAD_CONST               1 ('[rh<c8^ey?}ng:el')
+              2 STORE_FAST               0 (xored_string)
+
+ 14           4 LOAD_CONST               2 ('')
+              6 LOAD_METHOD              0 (join)
+              8 LOAD_CONST               3 (<code object <genexpr> at 0x7f9ef68face0, file "magic.py", line 14>)
+             10 LOAD_CONST               4 ('derive_key.<locals>.<genexpr>')
+             12 MAKE_FUNCTION            0
+             14 LOAD_FAST                0 (xored_string)
+             16 GET_ITER
+             18 CALL_FUNCTION            1
+             20 CALL_METHOD              1
+             22 LOAD_METHOD              1 (encode)
+             24 CALL_METHOD              0
+             26 RETURN_VALUE
+
+Disassembly of <code object <genexpr> at 0x7f9ef68face0, file "magic.py", line 14>:
+              0 GEN_START                0
+
+ 14           2 LOAD_FAST                0 (.0)
+        >>    4 FOR_ITER                11 (to 28)
+              6 STORE_FAST               1 (char)
+              8 LOAD_GLOBAL              0 (chr)
+             10 LOAD_GLOBAL              1 (ord)
+             12 LOAD_FAST                1 (char)
+             14 CALL_FUNCTION            1
+             16 LOAD_CONST               0 (11)
+             18 BINARY_XOR
+             20 CALL_FUNCTION            1
+             22 YIELD_VALUE
+             24 POP_TOP
+             26 JUMP_ABSOLUTE            2 (to 4)
+        >>   28 LOAD_CONST               1 (None)
+             30 RETURN_VALUE
+
+Disassembly of <code object read_file_content at 0x7f9ef68fb520, file "magic.py", line 16>:
+ 18           0 LOAD_GLOBAL              0 (open)
+              2 LOAD_FAST                0 (file_path)
+              4 LOAD_CONST               1 ('rb')
+              6 CALL_FUNCTION            2
+              8 SETUP_WITH              15 (to 40)
+             10 STORE_FAST               1 (f)
+
+ 19          12 LOAD_GLOBAL              1 (pad)
+             14 LOAD_FAST                1 (f)
+             16 LOAD_METHOD              2 (read)
+             18 CALL_METHOD              0
+             20 LOAD_GLOBAL              3 (BLOCK_SIZE)
+             22 CALL_FUNCTION            2
+
+ 18          24 POP_BLOCK
+             26 ROT_TWO
+             28 LOAD_CONST               2 (None)
+             30 DUP_TOP
+             32 DUP_TOP
+             34 CALL_FUNCTION            3
+             36 POP_TOP
+             38 RETURN_VALUE
+        >>   40 WITH_EXCEPT_START
+             42 POP_JUMP_IF_TRUE        23 (to 46)
+             44 RERAISE                  1
+        >>   46 POP_TOP
+             48 POP_TOP
+             50 POP_TOP
+             52 POP_EXCEPT
+             54 POP_TOP
+             56 LOAD_CONST               2 (None)
+             58 RETURN_VALUE
+
+Disassembly of <code object embed_and_extract at 0x7f9ef68fb680, file "magic.py", line 21>:
+ 22           0 LOAD_GLOBAL              0 (derive_key)
+              2 CALL_FUNCTION            0
+              4 STORE_FAST               2 (key)
+
+ 24           6 LOAD_GLOBAL              1 (read_file_content)
+              8 LOAD_FAST                0 (pdf_path)
+             10 CALL_FUNCTION            1
+             12 STORE_FAST               3 (pdf_content)
+
+ 25          14 LOAD_GLOBAL              1 (read_file_content)
+             16 LOAD_FAST                1 (png_path)
+             18 CALL_FUNCTION            1
+             20 STORE_FAST               4 (png_content)
+
+ 28          22 LOAD_FAST                3 (pdf_content)
+             24 LOAD_CONST               0 (None)
+             26 LOAD_GLOBAL              2 (BLOCK_SIZE)
+             28 BUILD_SLICE              2
+             30 BINARY_SUBSCR
+             32 STORE_DEREF              1 (plain_pdf_prefix)
+
+ 29          34 LOAD_GLOBAL              3 (PNG_SIGNATURE)
+             36 LOAD_GLOBAL              4 (struct)
+             38 LOAD_METHOD              5 (pack)
+             40 LOAD_CONST               1 ('>I')
+             42 LOAD_GLOBAL              6 (len)
+             44 LOAD_FAST                3 (pdf_content)
+             46 CALL_FUNCTION            1
+             48 LOAD_GLOBAL              2 (BLOCK_SIZE)
+             50 BINARY_SUBTRACT
+             52 CALL_METHOD              2
+             54 BINARY_ADD
+             56 LOAD_GLOBAL              7 (PNG_CHUNK_TYPE)
+             58 BINARY_ADD
+             60 STORE_FAST               5 (png_header)
+
+ 30          62 LOAD_GLOBAL              8 (AES)
+             64 LOAD_METHOD              9 (new)
+             66 LOAD_FAST                2 (key)
+             68 LOAD_GLOBAL              8 (AES)
+             70 LOAD_ATTR               10 (MODE_ECB)
+             72 CALL_METHOD              2
+             74 LOAD_METHOD             11 (decrypt)
+             76 LOAD_FAST                5 (png_header)
+             78 CALL_METHOD              1
+             80 STORE_DEREF              0 (decrypted_header)
+
+ 31          82 LOAD_GLOBAL             12 (bytes)
+             84 LOAD_CLOSURE             0 (decrypted_header)
+             86 LOAD_CLOSURE             1 (plain_pdf_prefix)
+             88 BUILD_TUPLE              2
+             90 LOAD_CONST               2 (<code object <listcomp> at 0x7f9ef68fb5d0, file "magic.py", line 31>)
+             92 LOAD_CONST               3 ('embed_and_extract.<locals>.<listcomp>')
+             94 MAKE_FUNCTION            8 (closure)
+             96 LOAD_GLOBAL             13 (range)
+             98 LOAD_GLOBAL              2 (BLOCK_SIZE)
+            100 CALL_FUNCTION            1
+            102 GET_ITER
+            104 CALL_FUNCTION            1
+            106 CALL_FUNCTION            1
+            108 STORE_FAST               6 (iv)
+
+ 32         110 LOAD_GLOBAL             14 (print)
+            112 LOAD_FAST                6 (iv)
+            114 CALL_FUNCTION            1
+            116 POP_TOP
+
+ 35         118 LOAD_GLOBAL              8 (AES)
+            120 LOAD_METHOD              9 (new)
+            122 LOAD_FAST                2 (key)
+            124 LOAD_GLOBAL              8 (AES)
+            126 LOAD_ATTR               15 (MODE_CBC)
+            128 LOAD_FAST                6 (iv)
+            130 CALL_METHOD              3
+            132 STORE_FAST               7 (aes_encryption)
+
+ 36         134 LOAD_FAST                7 (aes_encryption)
+            136 LOAD_METHOD             16 (encrypt)
+            138 LOAD_FAST                3 (pdf_content)
+            140 CALL_METHOD              1
+            142 STORE_FAST               8 (encrypted_pdf)
+
+ 37         144 LOAD_FAST                8 (encrypted_pdf)
+            146 LOAD_GLOBAL              4 (struct)
+            148 LOAD_METHOD              5 (pack)
+            150 LOAD_CONST               1 ('>I')
+            152 LOAD_GLOBAL             17 (crc32)
+            154 LOAD_FAST                8 (encrypted_pdf)
+            156 LOAD_CONST               4 (12)
+            158 LOAD_CONST               0 (None)
+            160 BUILD_SLICE              2
+            162 BINARY_SUBSCR
+            164 CALL_FUNCTION            1
+            166 LOAD_CONST               5 (4294967295)
+            168 BINARY_AND
+            170 CALL_METHOD              2
+            172 INPLACE_ADD
+            174 STORE_FAST               8 (encrypted_pdf)
+
+ 38         176 LOAD_FAST                8 (encrypted_pdf)
+            178 LOAD_FAST                4 (png_content)
+            180 LOAD_CONST               6 (8)
+            182 LOAD_CONST               0 (None)
+            184 BUILD_SLICE              2
+            186 BINARY_SUBSCR
+            188 INPLACE_ADD
+            190 STORE_FAST               8 (encrypted_pdf)
+
+ 41         192 LOAD_GLOBAL              8 (AES)
+            194 LOAD_METHOD              9 (new)
+            196 LOAD_FAST                2 (key)
+            198 LOAD_GLOBAL              8 (AES)
+            200 LOAD_ATTR               15 (MODE_CBC)
+            202 LOAD_FAST                6 (iv)
+            204 CALL_METHOD              3
+            206 STORE_FAST               9 (aes_decryption)
+
+ 42         208 LOAD_GLOBAL             18 (open)
+            210 LOAD_CONST               7 ('out.pdf')
+            212 LOAD_CONST               8 ('wb')
+            214 CALL_FUNCTION            2
+            216 SETUP_WITH              20 (to 258)
+            218 STORE_FAST              10 (f)
+
+ 43         220 LOAD_FAST               10 (f)
+            222 LOAD_METHOD             19 (write)
+            224 LOAD_FAST                9 (aes_decryption)
+            226 LOAD_METHOD             11 (decrypt)
+            228 LOAD_GLOBAL             20 (pad)
+            230 LOAD_FAST                8 (encrypted_pdf)
+            232 LOAD_GLOBAL              2 (BLOCK_SIZE)
+            234 CALL_FUNCTION            2
+            236 CALL_METHOD              1
+            238 CALL_METHOD              1
+            240 POP_TOP
+            242 POP_BLOCK
+
+ 42         244 LOAD_CONST               0 (None)
+            246 DUP_TOP
+            248 DUP_TOP
+            250 CALL_FUNCTION            3
+            252 POP_TOP
+            254 LOAD_CONST               0 (None)
+            256 RETURN_VALUE
+        >>  258 WITH_EXCEPT_START
+            260 POP_JUMP_IF_TRUE       132 (to 264)
+            262 RERAISE                  1
+        >>  264 POP_TOP
+            266 POP_TOP
+            268 POP_TOP
+            270 POP_EXCEPT
+            272 POP_TOP
+            274 LOAD_CONST               0 (None)
+            276 RETURN_VALUE
+
+Disassembly of <code object <listcomp> at 0x7f9ef68fb5d0, file "magic.py", line 31>:
+ 31           0 BUILD_LIST               0
+              2 LOAD_FAST                0 (.0)
+        >>    4 FOR_ITER                10 (to 26)
+              6 STORE_FAST               1 (i)
+              8 LOAD_DEREF               0 (decrypted_header)
+             10 LOAD_FAST                1 (i)
+             12 BINARY_SUBSCR
+             14 LOAD_DEREF               1 (plain_pdf_prefix)
+             16 LOAD_FAST                1 (i)
+             18 BINARY_SUBSCR
+             20 BINARY_XOR
+             22 LIST_APPEND              2
+             24 JUMP_ABSOLUTE            2 (to 4)
+        >>   26 RETURN_VALUE
